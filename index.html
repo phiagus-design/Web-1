@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AstroMetrics Institute - Data Archive</title>
+    
+    <!-- Typography Integration -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS Integration -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Marked.js for Client-Side Markdown Parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Framework Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                        },
+                        brand: {
+                            blue: '#2563eb',   // Institutional Blue
+                            dark: '#0a0a0a',   // Deep Contrast
+                            light: '#f8fafc',  // Crisp Background
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Advanced Typography for Parsed Markdown */
+        .markdown-body {
+            color: #334155;
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+        .markdown-body h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem; color: #0a0a0a; letter-spacing: -0.025em; line-height: 1.2; }
+        .markdown-body h2 { font-size: 1.75rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1.25rem; color: #0f172a; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; letter-spacing: -0.015em; }
+        .markdown-body h3 { font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; color: #1e293b; }
+        .markdown-body p { margin-bottom: 1.5rem; }
+        .markdown-body strong { color: #0f172a; font-weight: 600; }
+        .markdown-body blockquote { border-left: 3px solid #2563eb; padding-left: 1.25rem; font-style: italic; background-color: #f1f5f9; padding: 1.25rem; border-radius: 0 0.5rem 0.5rem 0; margin: 2rem 0; color: #475569; }
+        .markdown-body ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+        .markdown-body li { margin-bottom: 0.5rem; }
+        .markdown-body pre { background-color: #0f172a; color: #e2e8f0; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; margin: 2rem 0; box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05); }
+        .markdown-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.875em; background-color: #f1f5f9; padding: 0.2em 0.4em; border-radius: 0.25rem; color: #dc2626; }
+        .markdown-body pre code { background-color: transparent; padding: 0; color: inherit; }
+        .markdown-body table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.9375rem; }
+        .markdown-body th { background-color: #f8fafc; font-weight: 600; text-align: left; padding: 0.75rem 1rem; border-bottom: 2px solid #cbd5e1; color: #0f172a; }
+        .markdown-body td { padding: 0.75rem 1rem; border-bottom: 1px solid #e2e8f0; }
+        .markdown-body hr { border: 0; border-top: 1px solid #e2e8f0; margin: 2.5rem 0; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col font-sans">
+
+    <!-- Institutional Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center cursor-pointer group" onclick="navigate('view-home')">
+                    <div class="w-8 h-8 bg-brand-dark rounded flex items-center justify-center mr-3 group-hover:bg-brand-blue transition-colors">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-brand-dark">Astro<span class="text-brand-blue">Metrics</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8 text-sm font-medium text-slate-600">
+                        <span class="font-mono text-xs text-slate-400">SYS.VER. 4.0.2</span>
+                        <button onclick="navigate('view-home')" class="hover:text-brand-blue transition-colors">Repository Index</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow w-full">
+
+        <!-- ========================================== -->
+        <!-- VIEW 1: HOME PAGE (INDEX)                  -->
+        <!-- ========================================== -->
+        <div id="view-home" class="page-view fade-in block">
+            
+            <!-- Hero Section -->
+            <section class="bg-white border-b border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-brand-dark tracking-tight mb-6 max-w-4xl">
+                        Declassified <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-slate-800">Extraterrestrial</span> Data Archive
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed">
+                        A strictly regulated repository of empirical observations, kinematic analyses, and xenobiological hypotheses regarding Unidentified Aerial Phenomena (UAP).
+                    </p>
+                </div>
+            </section>
+
+            <!-- Document Grid -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-xl font-bold text-slate-800">Available Classifications</h2>
+                    <div class="h-px bg-slate-200 flex-grow ml-6"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    
+                    <!-- Dossier 1 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-lg hover:border-brand-blue/30 transition-all duration-300 flex flex-col group cursor-pointer" onclick="fetchAndRenderMarkdown('articles/uap-propulsion.md')">
+                        <div class="p-8 flex flex-col flex-grow">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-mono font-medium rounded-md tracking-wide">PHYSICS</span>
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-brand-blue transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-brand-blue transition-colors">Metric Engineering</h3>
+                            <p class="text-slate-600 mb-6 flex-grow leading-relaxed">Theoretical application of Alcubierre warp metric parameters and localized spacetime distortion.</p>
+                            <div class="pt-4 border-t border-slate-100 flex items-center justify-between mt-auto">
+                                <span class="font-mono text-xs text-slate-400">REF: UAP-PROP-001</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dossier 2 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-lg hover:border-brand-blue/30 transition-all duration-300 flex flex-col group cursor-pointer" onclick="fetchAndRenderMarkdown('articles/xenobiology.md')">
+                        <div class="p-8 flex flex-col flex-grow">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-mono font-medium rounded-md tracking-wide">BIOLOGY</span>
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-brand-blue transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-brand-blue transition-colors">Morphological Paradigms</h3>
+                            <p class="text-slate-600 mb-6 flex-grow leading-relaxed">Hypothesizing alternative biochemistry, silicon-based foundations, and exoplanetary evolutionary adaptations.</p>
+                            <div class="pt-4 border-t border-slate-100 flex items-center justify-between mt-auto">
+                                <span class="font-mono text-xs text-slate-400">REF: BIO-MORPH-042</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dossier 3 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-lg hover:border-brand-blue/30 transition-all duration-300 flex flex-col group cursor-pointer" onclick="fetchAndRenderMarkdown('articles/signal-crypto.md')">
+                        <div class="p-8 flex flex-col flex-grow">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-mono font-medium rounded-md tracking-wide">SIGNALS</span>
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-brand-blue transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-brand-blue transition-colors">Signal Cryptography</h3>
+                            <p class="text-slate-600 mb-6 flex-grow leading-relaxed">Deciphering directed energy fast radio bursts utilizing universal mathematical constants and prime sequences.</p>
+                            <div class="pt-4 border-t border-slate-100 flex items-center justify-between mt-auto">
+                                <span class="font-mono text-xs text-slate-400">REF: SIGINT-FRB-099</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW 2: DYNAMIC ARTICLE RENDERER           -->
+        <!-- ========================================== -->
+        <div id="view-article" class="page-view hidden fade-in py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Article Navigation Bar -->
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-10 pb-6 border-b border-slate-200 gap-4">
+                    <button onclick="navigate('view-home')" class="text-slate-500 font-medium hover:text-brand-blue transition-colors flex items-center w-fit">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        Return to Archive
+                    </button>
+                    
+                    <a id="download-md-btn" href="#" download class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-white text-slate-700 text-sm font-medium rounded-md hover:bg-slate-50 transition-colors border border-slate-300 shadow-sm">
+                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Export Raw Data (.md)
+                    </a>
+                </div>
+                
+                <!-- Data injection point for parsed Markdown -->
+                <article class="bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden">
+                    <!-- Decorative top border -->
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-blue to-cyan-400"></div>
+                    
+                    <div id="markdown-container" class="markdown-body">
+                        <!-- Content generated by Marked.js -->
+                    </div>
+                </article>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-10 mt-auto border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center">
+                <div class="w-6 h-6 bg-slate-800 rounded flex items-center justify-center mr-3">
+                    <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </div>
+                <span class="text-sm font-medium">Classified Network Access Protocol</span>
+            </div>
+            <p class="text-sm font-mono">&copy; 2026 AstroMetrics Research Institute.</p>
+        </div>
+    </footer>
+
+    <!-- Asynchronous Data Retrieval Logic -->
+    <script>
+        /**
+         * Navigates between virtual pages.
+         */
+        function navigate(targetViewId) {
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.add('hidden');
+                view.classList.remove('block');
+            });
+            document.getElementById(targetViewId).classList.remove('hidden');
+            document.getElementById(targetViewId).classList.add('block');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /**
+         * Asynchronously fetches a Markdown file, parses it, and renders it to the DOM.
+         * @param {string} filePath - The relative path to the Markdown file.
+         */
+        async function fetchAndRenderMarkdown(filePath) {
+            const container = document.getElementById('markdown-container');
+            const downloadBtn = document.getElementById('download-md-btn');
+            
+            // Configure the download button for the active document
+            if (downloadBtn) {
+                downloadBtn.href = filePath;
+                downloadBtn.download = filePath.split('/').pop();
+            }
+            
+            // Transition to the reading view and display a robust loading state
+            navigate('view-article');
+            container.innerHTML = `
+                <div class="py-16 flex flex-col items-center justify-center space-y-6">
+                    <div class="w-12 h-12 border-4 border-slate-200 border-t-brand-blue rounded-full animate-spin"></div>
+                    <div class="text-center font-mono text-sm text-slate-500 space-y-1">
+                        <p>ESTABLISHING SECURE CONNECTION...</p>
+                        <p>DECRYPTING PROTOCOL [ ${filePath} ]</p>
+                    </div>
+                </div>
+            `;
+
+            try {
+                // Execute network request to fetch the raw text file
+                const response = await fetch(filePath);
+                
+                // Validate the HTTP response status
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} - Data source unverified or restricted.`);
+                }
+                
+                const markdownText = await response.text();
+                
+                // Utilize Marked.js to transform the Markdown syntax into HTML
+                const parsedHTML = marked.parse(markdownText);
+                
+                // Inject the compiled HTML into the document object model
+                // Add a small timeout to simulate decryption/processing for a professional effect
+                setTimeout(() => {
+                    container.innerHTML = parsedHTML;
+                }, 300);
+
+            } catch (error) {
+                // Formal error handling protocol
+                console.error('Data retrieval failure:', error);
+                container.innerHTML = `
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+                        <div class="flex items-center gap-3 mb-4 text-red-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            <h3 class="font-bold text-lg font-mono tracking-tight">TRANSMISSION FAILURE</h3>
+                        </div>
+                        <p class="text-red-800 mb-2 font-medium">${error.message}</p>
+                        <p class="text-red-600 text-sm font-mono mt-4">System Diagnostic: Ensure the file precisely exists at '${filePath}' within the GitHub repository root structure.</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
